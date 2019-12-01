@@ -1,5 +1,6 @@
 using System.Text;
 using System.Linq;
+using System;
 
 namespace AdventOfCode2019.Puzzles.Day1
 {
@@ -9,11 +10,13 @@ namespace AdventOfCode2019.Puzzles.Day1
 
         public string GetSolution()
         {
-            StringBuilder sb = new StringBuilder();
+            int totalFuelNeeded = 0;
 
-            PuzzleHelper.ReadPuzzleDataFile("Day1Part1.txt").ToList().ForEach(x => sb.AppendLine(x));
-
-            return sb.ToString();
+            foreach (var line in PuzzleHelper.ReadPuzzleDataFile("Day1Part1.txt"))
+            {
+                totalFuelNeeded += Convert.ToInt32(Math.Floor(Convert.ToDecimal(line) / 3)) - 2;
+            }
+            return totalFuelNeeded.ToString();
         }
     }
 }

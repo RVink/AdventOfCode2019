@@ -45,6 +45,44 @@ namespace AdventOfCode2019.Puzzles.Day6
             return totalOrbits;
         }
 
+        public int GetNumberOfOrbitalTransfersBetween(Planet from, Planet to)
+        {
+            return FindPathAndCountTranfers(from, from , to);
+        }
+
+        private int FindPathAndCountTranfers(Planet comingFrom, Planet from, Planet to)
+        {
+            int totalTransfers = 0;
+
+            // Check if the current planet orbits the target or has it as an orbitting planet
+            if (from.PlanetsOrbitting.Where(planet => planet != comingFrom).Contains(to) || from.Orbits == to)
+            {
+                return 1;
+            }
+
+            // Try every orbitting planet and search for a path
+            foreach (var planet in from.PlanetsOrbitting.Where(planet => planet != comingFrom))   
+            {
+                totalTransfers += FindPathAndCountTranfers(from, planet, to);
+
+                // If a path is found then count it as a hop
+                if (totalTransfers > 0)
+                {
+                    return totalTransfers + 1;
+                }
+            }
+
+            // If none of the orbitting planets has a connection to the target planet then try the parent
+            if (totalTransfers == 0 && from.Orbits != comingFrom)
+            {
+                totalTransfers += FindPathAndCountTranfers(comingFrom, from.Orbits, to);
+                // Count this as a hop
+                return totalTransfers + 1;
+            }
+
+            return totalTransfers;
+        }
+
         private int CountOrbits(Planet planet)
         {
             if (planet.Orbits == null)

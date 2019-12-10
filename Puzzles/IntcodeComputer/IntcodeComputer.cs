@@ -5,9 +5,10 @@ namespace AdventOfCode2019.Puzzles.IntcodeComputer
 {
     public class IntcodeComputer
     {
-        public int RunProgram(int[] programOpcodes, int input)
+        public int RunProgram(int[] programOpcodes, int[] inputs)
         {
             bool exit = false;
+            int inputIndex = 0;
             int currentOpcodeIndex = 0;
             int output = -1;
 
@@ -32,8 +33,9 @@ namespace AdventOfCode2019.Puzzles.IntcodeComputer
                         currentOpcodeIndex += 4;
                         break;
                     case Instruction.INPUT:
-                        WriteData(programOpcodes, firstParameterMode, currentOpcodeIndex + 1, input);
+                        WriteData(programOpcodes, firstParameterMode, currentOpcodeIndex + 1, inputs[inputIndex]);
                         currentOpcodeIndex += 2;
+                        inputIndex++;
                         break;
                     case Instruction.OUTPUT:
                         output = ReadData(programOpcodes, firstParameterMode, currentOpcodeIndex + 1);

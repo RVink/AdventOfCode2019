@@ -21,7 +21,7 @@ namespace AdventOfCode2019.Puzzles.Day5
 
             var instance = new IntcodeComputer.IntcodeComputer();
 
-            return instance.RunProgram(opcodes.ToArray(), 1).ToString();
+            return instance.RunProgram(opcodes.ToArray(), new int[] { 1 }).ToString();
         }
     }
 }
